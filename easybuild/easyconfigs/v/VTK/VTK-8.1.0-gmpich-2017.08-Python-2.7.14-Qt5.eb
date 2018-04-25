@@ -43,12 +43,13 @@ dependencies = [
     ('Qt5', '5.10.1')
 ]
 
-configopts = "-DVTK_WRAP_PYTHON=ON -DQT_QMAKE_EXECUTABLE:PATH=$EBROOTQT5/bin"
+configopts = "-DVTK_WRAP_PYTHON=ON "
 configopts += "-DPYTHON_LIBRARY=$EBROOTPYTHON/lib/libpython%%(pyshortver)s.%s " % SHLIB_EXT
 configopts += " -DPYTHON_INCLUDE_DIR=$EBROOTPYTHON/include/python%(pyshortver)s "
 configopts += "-DVTK_USE_SYSTEM_HDF5=ON "
+configopts += "-DQT_QMAKE_EXECUTABLE:PATH=$EBROOTQT5/bin "
 configopts += "-DModule_vtkIOXdmf2:BOOL=ON -DModule_vtkIOXdmf3:BOOL=ON -DModule_vtkIOParallelXdmf3:BOOL=ON "
-configopts += "-DModule_vtkParallelMpi:BOOL=ON"
+configopts += "-DModule_vtkParallelMPI:BOOL=ON"
 preinstallopts = "mkdir -p %(installdir)s/lib/python%(pyshortver)s/site-packages/ && "
 preinstallopts += "export PYTHONPATH=%(installdir)s/lib/python%(pyshortver)s/site-packages:$PYTHONPATH && "
 
