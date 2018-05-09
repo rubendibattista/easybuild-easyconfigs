@@ -1,7 +1,7 @@
 easyblock = 'CMakeMake'
 
 name = 'ParaView'
-version = '5.5'
+version = '5.5.0'
 versionsuffix = '-mpi'
 
 homepage = "http://www.paraview.org"
@@ -9,20 +9,19 @@ description = "ParaView is a scientific parallel visualizer."
 
 toolchain = {'name': 'gmpolf', 'version': '2017.10'}
 toolchainopts = {'pic': True, 'usempi': True}
-
-download_suffix = 'download.php?submit=Download&version=v%(version_major_minor)s&type=source&os=all&downloadFile='
-source_urls = ['http://www.paraview.org/paraview-downloads/%s' % download_suffix]
+download_suffix = "download.php?submit=Download&version=v%(version_major_minor)s&type=source&os=Sources&downloadFile="
+source_urls = ['https://www.paraview.org/paraview-downloads/%s' % download_suffix]
 sources = ["ParaView-v%(version)s.tar.gz"]
-checksums = ['390d0f5dc66bf432e202a39b1f34193af4bf8aad2355338fa5e2778ea07a80e4']
+checksums = ['1b619e326ff574de808732ca9a7447e4cd14e94ae6568f55b6581896cd569dff']
 
 dependencies = [
-    ('Qt', '5.10.1'),
+    ('Qt5', '5.10.1'),
     ('zlib', '1.2.11'),
     ('HDF5', '1.10.2'),
-    ('Python', '2.7.14'),
+    ('Python', '2.7.14', '-bare'),
 ]
 
-builddependencies = [('CMake', '3.10.2')]
+builddependencies = [('CMake', '3.10.3')]
 
 separate_build_dir = True
 
@@ -38,7 +37,7 @@ configopts += '-DBUILD_TESTING=OFF '
 # Without internet connection, comment the following two lines (configopts and prebuildopts)
 configopts += '-DExternalData_OBJECT_STORES=%(builddir)s/ExternalData '
 
-configopts += '-DPARAVIEW_BUILD_QT_GUI -DPARAVIEW_QT_VERSION=5 -DQT_QMAKE_EXECUTABLE=$EBROOTQT/bin/qmake '
+configopts += '-DPARAVIEW_QT_VERSION=5 -DQT_QMAKE_EXECUTABLE=$EBROOTQT/bin/qmake '
 # The ParaView server can be cranky, test downloads are quite often failing, especially in the case
 # of parallel downloads. Using ; insted of && gives a second chance to download the test files, if the
 # first serial attempt would fail.
