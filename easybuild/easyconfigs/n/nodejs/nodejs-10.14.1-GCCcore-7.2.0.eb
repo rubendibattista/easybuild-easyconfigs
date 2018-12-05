@@ -1,0 +1,30 @@
+easyblock = 'ConfigureMake'
+
+name = 'nodejs'
+version = '10.14.1'
+
+homepage = 'http://nodejs.org'
+
+description = """Node.js is a platform built on Chrome's JavaScript runtime
+ for easily building fast, scalable network applications. Node.js uses an
+ event-driven, non-blocking I/O model that makes it lightweight and efficient,
+ perfect for data-intensive real-time applications that run across distributed devices."""
+
+toolchain = {'name': 'GCCcore', 'version': '7.2.0'}
+toolchainopts = {'lowopt': True}
+
+source_urls = ['https://nodejs.org/dist/v%(version)s/']
+sources = ['node-v%(version)s.tar.gz']
+checksums = ['b97b355f3774adbeb4ffce52e275029e767ba9f317f9eb573175410b6255919f']
+
+builddependencies = [
+    ('binutils', '2.29'),
+    ('Python', '2.7.15', '-bare')
+]
+
+sanity_check_paths = {
+    'files': ["bin/node", "bin/npm"],
+    'dirs': ["lib/node_modules", "include/node"]
+}
+
+moduleclass = 'lang'
