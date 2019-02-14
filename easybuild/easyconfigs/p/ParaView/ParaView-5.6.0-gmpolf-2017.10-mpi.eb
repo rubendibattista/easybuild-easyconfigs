@@ -18,29 +18,73 @@ dependencies = [
     ('Qt5', '5.10.1'),
     ('zlib', '1.2.11'),
     ('HDF5', '1.10.2'),
-    ('Python', '2.7.15', '-bare'),
+    ('Python', '3.6.8', '-bare'),
+    ('HarfBuzz', '2.3.1'),
+    ('libjpeg-turbo', '1.5.3'),
+    ('expat', '2.2.6'),
+    ('libxml2', '2.9.8'),
+    ('LibTIFF', '4.0.9'),
 ]
 
 builddependencies = [('CMake', '3.10.3')]
 
 separate_build_dir = True
 
-configopts = '-DPARAVIEW_INSTALL_DEVELOPMENT_FILES=ON -DPARAVIEW_USE_MPI=ON '
-configopts += '-DVTK_USE_SYSTEM_HDF5=ON -DPARAVIEW_ENABLE_PYTHON=ON -DBUILD_SHARED_LIBS=ON '
-# if you want to build server only Paraview, uncomment the following line:
-# configopts += '-DVTK_USE_X=OFF '
-configopts += '-DPARAVIEW_ENABLE_XDMF3:BOOL=ON '
-# Without internet connection turn off testing (uncomment the following line)
-configopts += '-DBUILD_TESTING=OFF '
-# Or consult https://gitlab.kitware.com/vtk/vtk/blob/master/Documentation/dev/git/data.md
-# and download ExternalData to $EASYBUILD_SOURCEPATH and adjust -DExternalData_OBJECT_STORES accordingly
-# Without internet connection, comment the following two lines (configopts and prebuildopts)
-configopts += '-DExternalData_OBJECT_STORES=%(builddir)s/ExternalData '
+cmake_args = [
+    '-DVTK_USE_X:BOOL=ON',
+    '-DVTK_RENDERING_BACKEND:STRING=OpenGL2',
+    '-DPARAVIEW_INSTALL_DEVELOPMENT_FILES:BOOL=ON',
+    '-DBUILD_TESTING:BOOL=OFF',
+    '-DBUILD_EXAMPLES:BOOL=OFF',
+    '-DPARAVIEW_ENABLE_XDMF3:BOOL=ON',
 
-configopts += '-DPARAVIEW_QT_VERSION=5 -DQT_QMAKE_EXECUTABLE=$EBROOTQT/bin/qmake '
-# The ParaView server can be cranky, test downloads are quite often failing, especially in the case
-# of parallel downloads. Using ; insted of && gives a second chance to download the test files, if the
-# first serial attempt would fail.
+    # Python
+    '-DPARAVIEW_ENABLE_PYTHON:BOOL=ON',
+    '-DPYTHON_EXECUTABLE:FILEPATH=$EBROOTPYTHON/bin/python',
+
+    # MPI
+    '-DPARAVIEW_USE_MPI:BOOL=ON',
+    '-DMPIEXEC:FILEPATH=$EBROOTMPI/bin/mpiexec',
+    '-DMPI_CXX_COMPILER:PATH=$EBROOTMPI/bin/mpicxx',
+    '-DMPI_CXX_COMPILER:PATH=$EBROOTMPI/bin/mpicc',
+    '-DMPI_Fortran_COMPILER:PATH=$EBROOTMPI/bin/mpifc',
+
+    # QT
+    '-DPARAVIEW_BUILD_QT_GUI:BOOL=ON',
+    '-DPARAVIEW_QT_VERSION=5',
+    '-DQT_MAKE_EXECUTABLE=$EBROOT/bin/qmake',
+
+    # VTK Related stuff
+    '-DVTK_USE_SYSTEM_FREETYPE:BOOL=ON',
+    '-DVTK_USE_SYSTEM_HDF5:BOOL=ON',
+    '-DVTK_USE_SYSTEM_JPEG:BOOL=ON',
+    '-DVTK_USE_SYSTEM_LIBXML2:BOOL=ON',
+    '-DVTK_USE_SYSTEM_NETCDF:BOOL=ON',
+    '-DVTK_USE_SYSTEM_EXPAT:BOOL=ON',
+    '-DVTK_USE_SYSTEM_TIFF:BOOL=ON',
+    '-DVTK_USE_SYSTEM_ZLIB:BOOL=ON'
+]
+
+configopts = ' '.join(cmake_args);
+
+
+
+# configopts = '-DPARAVIEW_INSTALL_DEVELOPMENT_FILES=ON -DPARAVIEW_USE_MPI=ON '
+# configopts += '-DVTK_USE_SYSTEM_HDF5=ON -DPARAVIEW_ENABLE_PYTHON=ON -DBUILD_SHARED_LIBS=ON '
+# # if you want to build server only Paraview, uncomment the following line:
+# # configopts += '-DVTK_USE_X=OFF '
+# configopts += '-DPARAVIEW_ENABLE_XDMF3:BOOL=ON '
+# # Without internet connection turn off testing (uncomment the following line)
+# configopts += '-DBUILD_TESTING=OFF '
+# # Or consult https://gitlab.kitware.com/vtk/vtk/blob/master/Documentation/dev/git/data.md
+# # and download ExternalData to $EASYBUILD_SOURCEPATH and adjust -DExternalData_OBJECT_STORES accordingly
+# # Without internet connection, comment the following two lines (configopts and prebuildopts)
+# configopts += '-DExternalData_OBJECT_STORES=%(builddir)s/ExternalData '
+#
+# configopts += '-DPARAVIEW_QT_VERSION=5 -DQT_QMAKE_EXECUTABLE=$EBROOTQT/bin/qmake '
+# # The ParaView server can be cranky, test downloads are quite often failing, especially in the case
+# # of parallel downloads. Using ; insted of && gives a second chance to download the test files, if the
+# # first serial attempt would fail.
 prebuildopts = 'make VTKData ;'
 
 moduleclass = 'vis'
