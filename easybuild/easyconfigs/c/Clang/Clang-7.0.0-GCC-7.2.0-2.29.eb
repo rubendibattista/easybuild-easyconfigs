@@ -48,7 +48,7 @@ builddependencies = [
 ]
 
 assertions = True
-
 usepolly = True
+skip_all_tests = True
 
 moduleclass = 'compiler'
