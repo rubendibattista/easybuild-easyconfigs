@@ -18,6 +18,7 @@ dependencies = [
     ('Qt5', '5.10.1'),
     ('zlib', '1.2.11'),
     ('HDF5', '1.10.2'),
+    ('netCDF-C++4', '4.3.0'),
     ('Python', '3.6.8', '-bare'),
     ('HarfBuzz', '2.3.1'),
     ('libjpeg-turbo', '1.5.3'),
