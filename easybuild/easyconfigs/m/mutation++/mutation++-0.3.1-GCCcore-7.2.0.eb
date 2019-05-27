@@ -1,0 +1,43 @@
+# Note:
+# This is an easyconfig file for EasyBuild, see https://github.com/easybuilders/easybuild
+# It was auto-generated based on a template easyconfig, so it should be used with care.
+easyblock = 'CMakeMake'
+
+name = 'mutation++'
+version = '0.3.1'
+
+homepage = 'https://github.com/mutationpp/Mutationpp'
+
+description = """The Multicomponent Thermodynamic And Transport properties for
+Ionized gases in C++ (Mutation++) library is designed to provided efficient
+algorithms for the computation of various properties important in the fields of
+hypersonics and combustion Computational Fluid Dynamics (CFD) """
+
+toolchain = {'name': 'GCCcore', 'version': '7.2.0'}
+
+# For sources line to work correctly with --try-software-version, you MUST employ %s OR use a construct like SOURCE_TAR_GZ
+sources = ['v%(version)s.tar.gz']
+source_urls = ['https://github.com/mutationpp/Mutationpp/archive']
+
+configopts = '-DEigen_DIR=$EBROOTEIGEN -DENABLE_TESTING:BOOL=TRUE '
+configopts += '-DBUILD_FORTRAN_WRAPPER:BOOL=TRUE'
+
+patches = []
+
+dependencies = [
+    ('binutils', '2.29'),
+    ('Eigen', '3.3.7')
+]
+
+builddependencies = [
+    ('CMake', '3.10.3')
+]
+
+# The sanity test MUST be tuned before going production and submitting your contribution to upstream git repositories
+sanity_check_paths = {
+    'files': ["bin/%s" % x for x in ['checkmix', 'bprime', 'mppequil']],
+    'dirs': ["include/mutation++"]
+}
+
+# You SHOULD change the following line; Kindly consult other easyconfigs for possible options
+moduleclass = 'chem'
