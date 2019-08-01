@@ -1,0 +1,14 @@
+name = 'Java'
+version = '12.0.2'
+
+homepage = 'http://openjdk.java.net'
+description = """Java Platform, Standard Edition (Java SE) lets you develop and deploy
+ Java applications on desktops and servers."""
+
+toolchain = {'name': 'dummy', 'version': 'dummy'}
+
+source_urls = ['https://download.java.net/java/GA/jdk%(version)s/e482c34c86bd4bf8b56c0b35558996b9/10/GPL/']
+sources = ['openjdk-%(version)s_linux-x64_bin.tar.gz']
+checksums = ['75998a6ebf477467aa5fb68227a67733f0e77e01f737d4dfbc01e617e59106ed']
+
+moduleclass = 'lang'
