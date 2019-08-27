@@ -38,6 +38,7 @@ default_easyblock = 'ConfigureMake'
 default_component_specs = {
     'sources': [SOURCE_TAR_GZ],
     'start_dir': '%(name)s-%(version)s',
+    'runtest': False,
 }
 components = [
     ('xorg-macros', '1.19.2', {  # 2018-03-04
@@ -114,6 +115,7 @@ components = [
     }),
     ('libXcursor', '1.2.0', {  # 2019-03-11
         'checksums': ['ad5b2574fccaa4c3fa67b9874fbed863d29ad230c784e9a08b20692418f6a1f8'],
+        'source_urls': ['https://www.x.org/archive/individual/lib/'],
     }),
     ('libXdamage', '1.1.5', {  # 2019-03-11
         'checksums': ['630ec53abb8c2d6dac5cd9f06c1f73ffb4a3167f8118fdebd77afd639dbc2019'],
